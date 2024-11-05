@@ -1,0 +1,16 @@
+body { margin: 0; }
+
+canvas { display: block; z-index: 1; }
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #c9d9e780;
+    color: #29262b;
+    padding: 0 16px;
+}
+
+.hightlight {
+    color: #6c672e;
+}
