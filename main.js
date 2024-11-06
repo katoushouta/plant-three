@@ -27,6 +27,11 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 // 3Dモデルの読み込み
 async function loadModel() {
+    console.log(window.location.search); // window.location.searchの中身を確認
+    const queryParam = new URLSearchParams(window.location.search); // URLSearchParamsを使ってクエリパラメータを取得
+    const plantId = queryParam.get('plant_id');
+    console.log(plantId);
+    
     loader.load( './public/sun_flower_10.glb', function ( gltf ) {
 
         scene.add( gltf.scene );
