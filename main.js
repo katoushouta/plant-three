@@ -27,14 +27,6 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 // 3Dモデルの読み込み
 async function loadModel() {
-    // Luma Genie APIを使ってモデルを取得
-    // const response = await fetch('https://api.luma.genie/v1/models/your-model-id'); // ここにAPIのURLを入力
-    // const modelData = await response.json();
-
-    // // モデルデータがThree.js形式であることを前提に、読み込む
-    // const loader = new THREE.ObjectLoader();
-    // const model = loader.parse(modelData);
-    // scene.add(model);
     loader.load( './public/sun_flower_10.glb', function ( gltf ) {
 
         scene.add( gltf.scene );
