@@ -31,8 +31,10 @@ async function loadModel() {
     const queryParam = new URLSearchParams(window.location.search); // URLSearchParamsを使ってクエリパラメータを取得
     const plantId = queryParam.get('plant_id');
     console.log(plantId);
-    
-    loader.load( './public/sun_flower_10.glb', function ( gltf ) {
+
+    const dataPath = "./public/" + plantId + "/10.glb";
+
+    loader.load( dataPath, function ( gltf ) {
 
         scene.add( gltf.scene );
     
