@@ -27,10 +27,8 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 // 3Dモデルの読み込み
 async function loadModel() {
-    console.log(window.location.search); // window.location.searchの中身を確認
     let queryParam = new URLSearchParams(window.location.search); // URLSearchParamsを使ってクエリパラメータを取得
     let plantId = queryParam.get('plant_id');
-    console.log(plantId);
 
     // もしplantIdがnullだった場合、デフォルトで1(ひまわり)を設定
     if (plantId == null) {
