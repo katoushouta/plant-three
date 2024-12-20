@@ -6,6 +6,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 function Plant(plantId = 1, growStage = 10) {
     this.plantId = plantId;
     this.growStage = growStage;
+    this.waterLevel = 0;
+    this.lastWatered = Date.now();
     this.initPlant = function () {
         let queryParams = new URLSearchParams(window.location.search);
         let plantId = queryParams.get('plant_id');
@@ -26,6 +28,29 @@ function Plant(plantId = 1, growStage = 10) {
                 reject(error);
             });
         });
+    }
+    this.waterPlant = function () {
+        this.waterLevel += 1;
+        this.lastWatered = Date.now();
+    }
+    this.updateGrowth = function () {
+        const now = Date.now();
+        const timeSinceLastWatered = (now - this.lastWatered) / 1000; // in seconds
+
+        if (timeSinceLastWatered > 30) {
+            this.waterLevel -= 1; // 30秒以上経過していたら水を減らす
+        }
+
+        if (this.waterLevel > 5) {
+            this.growStage += 1; // 水あげていると成長する
+            this.waterLevel = 0; // 水の量リセット
+        } else if (this.waterLevel < 0) {
+            this.growStage -= 1; // 水をあげていないと成長が止まる
+            this.waterLevel = 0; // 水の量リセット
+        }
+
+        // 成長ステージの最小値を1に設定
+        this.growStage = Math.max(1, this.growStage);
     }
 }
 
@@ -65,6 +90,7 @@ function animate() {
     requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
+    plant.updateGrowth();
 }
 
 // モデルをロードしてアニメーション開始
@@ -76,3 +102,9 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+// 定期的に水をあげる
+setInterval(() => {
+    plant.waterPlant();
+}, 10000); // Water the plant every 10 seconds
+
