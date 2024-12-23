@@ -57,12 +57,26 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-// モデルをロードしてアニメーション開始
-loadModel().then(animate);
+// リストボタンがクリックされたときの処理
+function handleClickListButton() {
+    window.location.href = "./plant_list/index.html";
+}
 
-// ウィンドウリサイズ時にレンダラーとカメラを調整
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
+// 初期化
+function init() {
+    // リストボタンのイベントリスナーを追加
+    const listButton = document.getElementById('list-button');
+    listButton.addEventListener('click', handleClickListButton);
+
+    // モデルをロードしてアニメーション開始
+    loadModel().then(animate);
+
+    // ウィンドウリサイズ時にレンダラーとカメラを調整
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+}
+
+init()
